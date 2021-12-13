@@ -22,6 +22,7 @@ import CustomButton from '../../../Components/CustomButton';
 import Divider from '../../../Components/Divider';
 import {Calendar, CodeDownload} from '../../../Components/Icons';
 import DateTimePicker from '../../../Components/DateTimePicker';
+import ScheduleModal from '../../../Modals/FYP/Schedule';
 type Props = {
   label: string;
   Key: string;
@@ -107,6 +108,7 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
     error: '',
     value: new Date(),
   });
+  const [createModal, setcreateModal] = useState(false);
   const {fypID, projectID} = route.params;
 
   const getData = async () => {
@@ -138,7 +140,45 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
   };
 
   const handleSchedule = () => {
-    console.log('Handling user interview');
+    const x = dateModal;
+    let isAllInputValid = true;
+    if (
+      dateModal.value.toLocaleDateString() === new Date().toLocaleDateString()
+    ) {
+      isAllInputValid = false;
+      x['error'] = "Can't set meeting for today";
+    } else if (dateModal.value < new Date()) {
+      isAllInputValid = false;
+      x['error'] = 'Invalid meeting date.';
+    }
+
+    setdateModal(props => {
+      return {...x};
+    });
+
+    if (isAllInputValid) {
+      setscheduling(true);
+
+      Axios.post(
+        `/api/fyp/${fypID}/applicant/${submission.student.uuid}/meeting/`,
+        {
+          date: dateModal.value,
+        },
+      )
+        .then(response => {
+          if (response.status === 201) {
+            setcreateModal(true);
+          }
+          setscheduling(false);
+        })
+        .catch(error => {
+          if (error.response) {
+            ToastAndroid.show(error.response.data.error, 150);
+          }
+          setscheduling(false);
+          return error.response;
+        });
+    }
   };
 
   const formDate = (date: string) => {
@@ -192,6 +232,16 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
             };
           })
         }
+      />
+
+      <ScheduleModal
+        isShow={createModal}
+        toggleModal={() => {
+          setcreateModal(false);
+          setTimeout(() => {
+            navigation.goBack();
+          }, 700);
+        }}
       />
 
       {!loading && submission ? (
@@ -353,7 +403,7 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
             <View style={[styles.container, styles.margin]}>
               <View style={styles.headingContainer}>
                 <Text style={[styles.headingText, {color: theme.TEXT_COLOR}]}>
-                  Schedule
+                  Schedule Interview
                 </Text>
               </View>
             </View>
@@ -408,8 +458,8 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
             <View style={[styles.container, styles.margin]}>
               <Text
                 style={{color: theme.DIM_TEXT_COLOR, fontSize: Sizes.small}}>
-                An email will be send to the applicant contianing meeting link
-                and other instructions.
+                An email will be send to you and the applicant contianing
+                meeting link and other instructions.
               </Text>
             </View>
 

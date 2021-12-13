@@ -28,6 +28,7 @@ import Loading from '../../Components/Loading';
 //@ts-ignore
 import {BASE_URL} from 'react-native-dotenv';
 import ChatLottie from '../../Animations/Lottie/Chat';
+import RobotLottie from '../../Animations/Lottie/Robot';
 
 type props = {
   navigation: any;
@@ -156,9 +157,9 @@ const Bot: FC<props> = ({navigation, route}) => {
 
       {isLoading ? (
         <View style={[styles.center, {flex: 1}]}>
-          <ChatLottie />
+          <RobotLottie />
           <Text style={[styles.smallText, {color: theme.DIM_TEXT_COLOR}]}>
-            Doxi is getting ready...
+            Doxi is getting ready to talk to you...
           </Text>
         </View>
       ) : (
