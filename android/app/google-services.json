@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "860025674433",
+    "project_id": "django-notification-f3f52",
+    "storage_bucket": "django-notification-f3f52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860025674433:android:f27832d73ebefd8bded240",
+        "android_client_info": {
+          "package_name": "com.platformx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860025674433-9lrbcuaf4mljvf7l6476ehqf48p5pv8s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6vLSAC5zOCP9QvWmhJYIOkf6TFU336sA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860025674433-9lrbcuaf4mljvf7l6476ehqf48p5pv8s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
