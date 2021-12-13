@@ -60,18 +60,18 @@ const SavedPosts: FC<props> = ({navigation}) => {
         onBackPress={() => navigation.goBack()}
       />
 
-      {loading ? (
+      {loading || data.length === 0 ? (
         <View style={[styles.center, styles.parent]}>
           <Loading size={'large'} />
         </View>
-      ) : data.length === 0 ? (
-        <View style={styles.noPostContainer}>
+      ) : !loading && data.length === 0 ? (
+        <View style={[styles.center, styles.noPostContainer]}>
           <Text style={[styles.noPostText, {color: theme.DIM_TEXT_COLOR}]}>
-            User has not posted yet.
+            You have not saved any post yet.
           </Text>
         </View>
       ) : (
-        <View style={[styles.container]}>
+        <View style={[styles.container, styles.scroll]}>
           <FlatList
             data={data}
             nestedScrollEnabled
@@ -81,6 +81,7 @@ const SavedPosts: FC<props> = ({navigation}) => {
                 key={post.id}
                 postDetail={post}
                 navigation={navigation}
+                showPopUpIcon={false}
               />
             )}
             refreshControl={
@@ -112,6 +113,9 @@ const styles = StyleSheet.create({
   },
   margin: {
     marginHorizontal: Width * 0.04,
+  },
+  scroll: {
+    marginBottom: 50,
   },
   normalText: {
     fontSize: Sizes.normal,

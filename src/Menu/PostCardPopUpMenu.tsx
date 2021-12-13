@@ -16,11 +16,20 @@ const ICON_SIZE = Width * 0.07;
 
 type prop = {
   navigation: any;
+  id?: any;
   isEditable: boolean;
   post: any;
   deleteModal: (prev: boolean) => void;
+  handleSavePost?: (id: any) => void;
 };
-const PopUpMenu: FC<prop> = ({navigation, isEditable, post, deleteModal}) => {
+const PopUpMenu: FC<prop> = ({
+  navigation,
+  id,
+  isEditable,
+  post,
+  deleteModal,
+  handleSavePost,
+}) => {
   const [{theme}, dispatch] = useStateValue();
 
   return (
@@ -127,10 +136,15 @@ const PopUpMenu: FC<prop> = ({navigation, isEditable, post, deleteModal}) => {
               height: 35,
             },
           }}>
-          <MenuOption onSelect={() => console.log('Clicked on save post')}>
+          <MenuOption
+            onSelect={() => {
+              if (typeof handleSavePost !== 'undefined') {
+                handleSavePost(id);
+              }
+            }}>
             <View style={styles.menuOptionContainer}>
               <Ionicons
-                name={'download'}
+                name={'arrow-down'}
                 color={theme.ICON_COLOR}
                 size={ICON_SIZE * 0.8}
               />

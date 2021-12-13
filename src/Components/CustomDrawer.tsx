@@ -86,7 +86,7 @@ const StudentDrawer: FC<props> = ({navigation}) => {
     {
       id: 5,
       label: 'Saved Posts',
-      icon_name: 'ios-code-download-outline',
+      icon_name: 'arrow-down',
       onPress: () => navigation.navigate('SavedPosts'),
     },
     {

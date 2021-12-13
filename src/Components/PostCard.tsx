@@ -24,6 +24,8 @@ import {BASE_ADDRESS} from 'react-native-dotenv';
 import {useStateValue} from '../Store/StateProvider';
 import Divider from '../Components/Divider';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from '../Utils/Axios';
+import CreatePostModal from '../Modals/CreatePostModal';
 const MAX_TEXT_LENGTH = 290;
 
 const ICON_SIZE = Width * 0.07;
@@ -127,14 +129,20 @@ const PostCardButtons: FC<Props> = ({
 type props = {
   navigation: any;
   postDetail: any;
+  showPopUpIcon?: boolean;
 };
 
-const PostCard: FC<props> = ({navigation, postDetail}) => {
+const PostCard: FC<props> = ({
+  navigation,
+  postDetail,
+  showPopUpIcon = true,
+}) => {
   const [Commentmodal, setCommentmodal] = useState({
     showModal: false, // show modal or not
     focusTextInput: false, // if true, set auto focus on comment modal text input field to true
   });
   const [deleteModal, setDeleteModal] = useState(false);
+  const [SavedPostModal, setSavedPostModal] = useState(false);
   const [ProfileImageLoading, setProfileImageLoading] = useState(true); // user image
   const [Like, setLike] = useState<{
     isLiked: string;
@@ -201,6 +209,24 @@ const PostCard: FC<props> = ({navigation, postDetail}) => {
     }
   };
 
+  const handleSavePost = id => {
+    axios
+      .post(`/api/post/${id}/save/`)
+      .then(response => {
+        if (response.status === 201) {
+          setSavedPostModal(true);
+        }
+        if (response.status === 200) {
+          ToastAndroid.show(response.data.exists, 1500);
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          ToastAndroid.show(error.response.data.error, 1500);
+        }
+      });
+  };
+
   return (
     <View
       style={[
@@ -232,6 +258,12 @@ const PostCard: FC<props> = ({navigation, postDetail}) => {
         onDelete={handleDelete}
       />
 
+      {/* saved post modal  */}
+      <CreatePostModal
+        isShow={SavedPostModal}
+        toggleModal={() => setSavedPostModal(false)}
+      />
+
       {/* header  */}
       <View style={[styles.headerContainer]}>
         <View style={styles.headerImageContainer}>
@@ -260,15 +292,18 @@ const PostCard: FC<props> = ({navigation, postDetail}) => {
           </Text>
         </View>
 
-        {/* icon container  */}
-        <View style={styles.headerIconContainer}>
-          <PopUpMenu
-            isEditable={postDetail.is_editable}
-            deleteModal={postDetail.is_editable && setDeleteModal}
-            post={postDetail.is_editable && postDetail}
-            navigation={navigation}
-          />
-        </View>
+        {showPopUpIcon && (
+          <View style={styles.headerIconContainer}>
+            <PopUpMenu
+              isEditable={postDetail.is_editable}
+              deleteModal={postDetail.is_editable && setDeleteModal}
+              id={postDetail.id}
+              post={postDetail.is_editable && postDetail}
+              navigation={navigation}
+              handleSavePost={id => handleSavePost(id)}
+            />
+          </View>
+        )}
       </View>
       <Divider width={Width * 0.92} />
 
