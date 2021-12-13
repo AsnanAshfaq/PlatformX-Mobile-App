@@ -20,9 +20,8 @@ import Axios from '../../../Utils/Axios';
 import {BASE_URL} from 'react-native-dotenv';
 import CustomButton from '../../../Components/CustomButton';
 import Divider from '../../../Components/Divider';
-import {CodeDownload} from '../../../Components/Icons';
-import RNFetchBlob from 'rn-fetch-blob';
-
+import {Calendar, CodeDownload} from '../../../Components/Icons';
+import DateTimePicker from '../../../Components/DateTimePicker';
 type Props = {
   label: string;
   Key: string;
@@ -102,7 +101,12 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
     sourceCode: false,
     output: false,
   });
-
+  const [scheduling, setscheduling] = useState(false);
+  const [dateModal, setdateModal] = useState({
+    show: false,
+    error: '',
+    value: new Date(),
+  });
   const {fypID, projectID} = route.params;
 
   const getData = async () => {
@@ -133,6 +137,10 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
     Linking.openURL(path);
   };
 
+  const handleSchedule = () => {
+    console.log('Handling user interview');
+  };
+
   const formDate = (date: string) => {
     var d = date.slice(0, 10) + 'T' + date.slice(12, 19);
     return new Date(d).toLocaleString();
@@ -152,6 +160,40 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
         onBackPress={() => navigation.goBack()}
       />
 
+      <DateTimePicker
+        open={dateModal.show}
+        date={new Date()}
+        mode={'datetime'}
+        setDate={response => {
+          // hide modal first
+          setdateModal(props => {
+            return {
+              ...props,
+              show: false,
+            };
+          });
+
+          const getDate = new Date(response);
+
+          setdateModal(props => {
+            return {
+              ...props,
+              value: getDate,
+              error: '',
+            };
+          });
+        }}
+        cancel={() =>
+          setdateModal(props => {
+            return {
+              ...props,
+              error: '',
+              show: false,
+            };
+          })
+        }
+      />
+
       {!loading && submission ? (
         <ScrollView>
           <View style={{marginBottom: 10}}>
@@ -168,7 +210,15 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
                   }}
                   onLoadEnd={() => setImageLoading(false)}
                   onError={() => setImageLoading(false)}
-                  style={styles.image}
+                  style={[
+                    styles.image,
+                    !ImageLoading &&
+                      submission.student.user.profile_image && {
+                        borderRadius: 50,
+                        borderWidth: 3,
+                        borderColor: theme.GREEN_COLOR,
+                      },
+                  ]}
                 />
               </View>
 
@@ -295,6 +345,79 @@ const ViewSubmission: FC<props> = ({navigation, route}) => {
                 loading={fileLoading.output}
               />
             </View>
+
+            {/* scheduling interview  */}
+
+            <Divider size={'large'} width={Width * 0.92} />
+
+            <View style={[styles.container, styles.margin]}>
+              <View style={styles.headingContainer}>
+                <Text style={[styles.headingText, {color: theme.TEXT_COLOR}]}>
+                  Schedule
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.container}>
+              <View style={styles.center}>
+                <TouchableOpacity
+                  onPress={() =>
+                    setdateModal(props => {
+                      return {
+                        ...props,
+                        show: true,
+                      };
+                    })
+                  }
+                  style={[
+                    styles.cardContainer,
+                    {
+                      backgroundColor: theme.CARD_BACKGROUND_COLOR,
+                      borderColor:
+                        dateModal.error !== ''
+                          ? theme.ERROR_TEXT_COLOR
+                          : theme.CARD_BACKGROUND_COLOR,
+                      width: Width * 0.65,
+                    },
+                  ]}>
+                  <View style={styles.cardTextContainer}>
+                    <Text style={[styles.cardText, {color: theme.TEXT_COLOR}]}>
+                      {dateModal.value.toDateString() +
+                        ' ' +
+                        dateModal.value.toTimeString().slice(0, 8)}
+                    </Text>
+                  </View>
+                  <View style={styles.cardIconContainer}>
+                    <Calendar size={0.9} color={theme.GREEN_COLOR} />
+                  </View>
+                </TouchableOpacity>
+                {dateModal.error !== '' && (
+                  <View style={{alignItems: 'center', marginTop: 5}}>
+                    <Text
+                      style={[
+                        {color: theme.ERROR_TEXT_COLOR},
+                        styles.errorText,
+                      ]}>
+                      {dateModal.error}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
+
+            <View style={[styles.container, styles.margin]}>
+              <Text
+                style={{color: theme.DIM_TEXT_COLOR, fontSize: Sizes.small}}>
+                An email will be send to the applicant contianing meeting link
+                and other instructions.
+              </Text>
+            </View>
+
+            <CustomButton
+              text={'Schedule'}
+              onPress={handleSchedule}
+              loading={scheduling}
+            />
           </View>
         </ScrollView>
       ) : loading ? (
@@ -341,14 +464,14 @@ const styles = StyleSheet.create({
     fontSize: Sizes.normal,
   },
   image: {
-    width: Width * 0.4,
-    height: Width * 0.4,
+    width: Width * 0.25,
+    height: Width * 0.25,
     borderWidth: 1,
     borderRadius: 80,
     borderColor: 'transparent',
   },
   username: {
-    fontSize: Sizes.normal * 0.75,
+    fontSize: Sizes.normal * 0.8,
   },
   fullname: {
     fontSize: Sizes.normal,
@@ -396,7 +519,7 @@ const styles = StyleSheet.create({
     flex: 0.18,
   },
   cardText: {
-    fontSize: Sizes.normal,
+    fontSize: Sizes.normal * 0.8,
   },
   cardContainer: {
     borderWidth: 1,
@@ -408,5 +531,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: 'transparent',
+  },
+  errorText: {
+    fontSize: Sizes.small,
   },
 });

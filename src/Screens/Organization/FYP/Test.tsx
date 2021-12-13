@@ -62,22 +62,22 @@ const ViewTest: FC<props> = ({navigation, route}) => {
           <View style={styles.scrollContainer}>
             {/* title of the problem  */}
             <View style={styles.nameContainer}>
-              <Text style={[styles.nameText, {color: theme.TEXT_COLOR}]}>
+              <Text style={[styles.nameText, {color: theme.DIM_TEXT_COLOR}]}>
                 {test.name}
               </Text>
             </View>
-            <View style={styles.descriptionContainer}>
+            <View style={[styles.descriptionContainer, styles.center]}>
               <Text style={[styles.descriptionText, {color: theme.TEXT_COLOR}]}>
                 {test.description}
               </Text>
             </View>
             {/* created at  */}
-            <View style={styles.created_atContainer}>
+            {/* <View style={styles.created_atContainer}>
               <Text
                 style={[styles.created_atText, {color: theme.DIM_TEXT_COLOR}]}>
                 Created at {new Date(test.created_at).toDateString()}
               </Text>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       ) : loading ? (
