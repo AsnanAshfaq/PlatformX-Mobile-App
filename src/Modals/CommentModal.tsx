@@ -67,21 +67,6 @@ const CommentView: FC<Props> = ({comment, index}) => {
           {comment.text}
         </Text>
       </View>
-      <TouchableOpacity
-        style={styles.commentVoteContainer}
-        onPress={() => console.log('Pressed on vote')}>
-        {/* up and down arrows  */}
-        <Ionicons
-          name={'arrow-down-outline'}
-          size={ICON_SIZE * 0.85}
-          color={theme.GREEN_COLOR}
-        />
-        <Ionicons
-          name={'arrow-up-outline'}
-          size={ICON_SIZE * 0.85}
-          color={theme.RED_COLOR}
-        />
-      </TouchableOpacity>
     </View>
   );
 };

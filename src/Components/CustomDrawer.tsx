@@ -85,12 +85,18 @@ const StudentDrawer: FC<props> = ({navigation}) => {
     },
     {
       id: 5,
+      label: 'Saved Posts',
+      icon_name: 'ios-code-download-outline',
+      onPress: () => navigation.navigate('SavedPosts'),
+    },
+    {
+      id: 6,
       label: 'Settings',
       icon_name: 'ios-settings-sharp',
       onPress: () => navigation.navigate('Settings'),
     },
     {
-      id: 6,
+      id: 7,
       label: "FAQ's",
       icon_name: 'md-chatbox-sharp',
       onPress: () =>
@@ -99,13 +105,13 @@ const StudentDrawer: FC<props> = ({navigation}) => {
         }),
     },
     {
-      id: 7,
+      id: 8,
       label: 'Contact Us',
       icon_name: 'call-sharp',
       onPress: () => navigation.navigate('ContactUs'),
     },
     {
-      id: 8,
+      id: 9,
       label: 'Sign Out',
       icon_name: 'md-log-out-outline',
       onPress: () => {

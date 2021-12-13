@@ -15,7 +15,7 @@ import ContactUs from '../../Screens/Student/ContactUs';
 import LinkedInSignIn from '../../Screens/Student/LinkedInSignIn';
 import ViewStudentProfile from '../../Screens/Profile/Student/StdStdProfile';
 import Payment from '../../Screens/Student/Payments';
-
+import SavedPosts from '../../Screens/Student/SavedPosts';
 const Stack = createStackNavigator();
 
 const StudentScreens = () => {
@@ -34,6 +34,7 @@ const StudentScreens = () => {
       <Stack.Screen name="Main" component={StudentDrawerScreens} />
       <Stack.Screen name="Create_Edit_Post" component={Create_EditPost} />
       <Stack.Screen name="ViewStudentProfile" component={ViewStudentProfile} />
+      <Stack.Screen name="SavedPosts" component={SavedPosts} />
       <Stack.Screen name="Chat" component={Chat} />
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="Settings" component={Settings} />
