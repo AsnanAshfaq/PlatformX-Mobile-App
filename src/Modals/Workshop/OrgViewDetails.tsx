@@ -65,11 +65,7 @@ const WorkshopViewModal: FC<props> = ({isShow, isEnded, toggleModal}) => {
             <Text style={[styles.descText, {color: theme.TEXT_COLOR}]}>
               {isEnded
                 ? `Your workshop has been ended.${'\n'} Thank you for hosting your workshop on PlatformX`
-                : `
-                An email has been sent to you, workshop speaker and all the
-                workshop attendees containing meeting link and other instructions.
-                ${'\n'}
-                Thank you for hosting this workshop.`}
+                : `An email has been sent to you, workshop speaker and all the workshop attendees containing meeting link and other instructions.${'\n'}Thank you for hosting this workshop.`}
             </Text>
           </View>
           <View style={styles.animationContainer}>
@@ -162,6 +158,7 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     flex: 0.38,
     marginHorizontal: Width * 0.04,
+    // marginTop: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },

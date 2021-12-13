@@ -400,7 +400,7 @@ const General: FC<props> = ({method, data, setGeneralData, movePage}) => {
                       placeholder={'Enter a take away'}
                       placeholderColor={theme.PLACE_HOLDER_TEXT_COLOR}
                       textContentType={'name'}
-                      maxLength={30}
+                      maxLength={60}
                       showLength
                       error={Input.take_aways[index].error}
                     />
@@ -455,7 +455,7 @@ const General: FC<props> = ({method, data, setGeneralData, movePage}) => {
                       placeholder={'Enter a pre-requisite'}
                       placeholderColor={theme.PLACE_HOLDER_TEXT_COLOR}
                       textContentType={'name'}
-                      maxLength={30}
+                      maxLength={60}
                       showLength
                       error={Input.pre_requisites[index].error}
                     />

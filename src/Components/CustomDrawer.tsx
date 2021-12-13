@@ -195,12 +195,18 @@ const OrganizationDrawer: FC<props> = ({navigation}) => {
     },
     {
       id: 2,
+      label: 'Doxi',
+      icon_name: 'robot',
+      onPress: () => navigation.navigate('BotScreen'),
+    },
+    {
+      id: 3,
       label: 'Settings',
       icon_name: 'ios-settings-sharp',
       onPress: () => navigation.navigate('Settings'),
     },
     {
-      id: 3,
+      id: 4,
       label: "FAQ's",
       icon_name: 'md-chatbox-sharp',
       onPress: () =>
@@ -209,13 +215,13 @@ const OrganizationDrawer: FC<props> = ({navigation}) => {
         }),
     },
     {
-      id: 4,
+      id: 5,
       label: 'Contact Us',
       icon_name: 'call-sharp',
       onPress: () => navigation.navigate('ContactUs'),
     },
     {
-      id: 5,
+      id: 6,
       label: 'Sign Out',
       icon_name: 'md-log-out-outline',
       onPress: () => {

@@ -11,7 +11,7 @@ import FAQS from '../../Screens/FAQS';
 import ContactUs from '../../Screens/Student/ContactUs';
 import ViewStudentProfile from '../../Screens/Profile/Organization/OrgStdProfile';
 import MySubscriptions from '../../Screens/Organization/MySubscriptions';
-
+import Bot from '../../Screens/Organization/Bot';
 const Stack = createStackNavigator();
 
 const OrganizationScreens = () => {
@@ -33,6 +33,8 @@ const OrganizationScreens = () => {
       <Stack.Screen name="InternshipScreens" component={InternshipScreens} />
       <Stack.Screen name="FYPScreens" component={FYPScreens} />
       <Stack.Screen name="ViewStudentProfile" component={ViewStudentProfile} />
+      <Stack.Screen name={'BotScreen'} component={Bot} />
+
       <Stack.Screen
         name={'HackathonSubscription'}
         component={HackathonSubscription}
