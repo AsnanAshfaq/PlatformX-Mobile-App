@@ -19,8 +19,7 @@ import {Height, Sizes, Width} from '../Constants/Size';
 import Bullet from './Bullet';
 import {commaSeperator} from '../Utils/Numbers';
 import {Calendar, Cash} from './Icons';
-import InternshipDetailsModal from '../Modals/InternshipDetailsModa';
-// import SkillIcon from '../../assets/images/skills_icon.png';
+import InternshipDetailsModal from '../Modals/Internship/InternshipDetailsModal';
 type props = {
   navigation: any;
   route: any;
@@ -96,6 +95,7 @@ const ViewInternship: FC<props> = ({navigation, route, screen, ID}) => {
               name={internshipData.name}
             />
           )}
+
           <ScrollView>
             <View style={styles.scroll}>
               {screen === 'student' &&

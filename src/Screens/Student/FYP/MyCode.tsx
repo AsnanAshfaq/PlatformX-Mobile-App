@@ -119,20 +119,23 @@ const MyCode: FC<props> = ({navigation, route}) => {
         <ScrollView>
           <View style={[styles.scroll]}>
             <View style={[styles.container, {flex: 1}]}>
-              <Text style={[styles.heading, {color: theme.TEXT_COLOR}]}>
-                Code{' '}
-              </Text>
-
-              <View style={[styles.container, styles.codeContainer]}>
-                <Text style={[{color: theme.DIM_TEXT_COLOR}]}>
-                  {code.input}
-                </Text>
-              </View>
-              <Divider
-                size={'large'}
-                marginHorizontal={0}
-                width={Width * 0.9}
-              />
+              {code.input !== '' && (
+                <>
+                  <Text style={[styles.heading, {color: theme.TEXT_COLOR}]}>
+                    Code{' '}
+                  </Text>
+                  <View style={[styles.container, styles.codeContainer]}>
+                    <Text style={[{color: theme.DIM_TEXT_COLOR}]}>
+                      {code.input}
+                    </Text>
+                  </View>
+                  <Divider
+                    size={'large'}
+                    marginHorizontal={0}
+                    width={Width * 0.9}
+                  />
+                </>
+              )}
             </View>
 
             {code.output !== '' && (

@@ -112,42 +112,38 @@ const ScheduleMeetings: FC<props> = ({navigation, route}) => {
 
   const handleSchedule = () => {
     seterror('');
-    setscheduleLoading(true);
+    let isAllInputValid = true;
 
     if (
       dateModal.value.toLocaleDateString() === new Date().toLocaleDateString()
     ) {
-      let timeDifference = dateModal.value.getHours() - new Date().getHours();
-      if (timeDifference === 0 || timeDifference < 0) {
-        seterror('Invalid time for interview');
-        setscheduleLoading(false);
-      } else if (timeDifference < 2) {
-        seterror('interview time should be more than 2 hours from now.');
-        setscheduleLoading(false);
-      } else {
-        // make api call
-        Axios.post(
-          `/api/internship/${internship_id}/applicant/${user_id}/meeting/`,
-          {
-            time: dateModal.value,
-          },
-        )
-          .then(response => {
-            // show success modal
-            setscheduleLoading(false);
-            setSuccessModal(true);
-          })
-          .catch(err => {
-            setscheduleLoading(false);
-            ToastAndroid.show(err.response.data.error, 1500);
-          });
-      }
+      isAllInputValid = false;
+      seterror("Can't set meeting for today");
     } else if (dateModal.value < new Date()) {
-      seterror('Invalid date');
-      setscheduleLoading(false);
-    } else {
-      seterror('');
-      setscheduleLoading(false);
+      isAllInputValid = false;
+      seterror('Invalid meeting date.');
+    }
+
+    if (isAllInputValid) {
+      setscheduleLoading(true);
+
+      Axios.post(
+        `/api/internship/${internship_id}/applicant/${user_id}/meeting/`,
+        {
+          time: dateModal.value,
+        },
+      )
+        .then(response => {
+          // show success modal
+          if (response.status === 201) {
+            setSuccessModal(true);
+          }
+          setscheduleLoading(false);
+        })
+        .catch(err => {
+          setscheduleLoading(false);
+          ToastAndroid.show(err.response.data.error, 1500);
+        });
     }
   };
 
@@ -195,11 +191,12 @@ const ScheduleMeetings: FC<props> = ({navigation, route}) => {
             };
           });
 
+          const getDate = new Date(response);
           setDatemodal(props => {
             return {
               ...props,
-              value: response,
-              isShown: false,
+              value: getDate,
+              error: '',
             };
           });
 
@@ -246,7 +243,15 @@ const ScheduleMeetings: FC<props> = ({navigation, route}) => {
                     }}
                     onLoadEnd={() => setImageLoading(false)}
                     onError={() => setImageLoading(false)}
-                    style={styles.image}
+                    style={[
+                      styles.image,
+                      !ImageLoading &&
+                        userdata.student.user.profile_image && {
+                          borderRadius: 50,
+                          borderWidth: 3,
+                          borderColor: theme.GREEN_COLOR,
+                        },
+                    ]}
                   />
                 </View>
 
@@ -433,8 +438,8 @@ const styles = StyleSheet.create({
     fontSize: Sizes.normal,
   },
   image: {
-    width: Width * 0.4,
-    height: Width * 0.4,
+    width: Width * 0.25,
+    height: Width * 0.25,
     borderWidth: 1,
     borderRadius: 80,
     borderColor: 'transparent',

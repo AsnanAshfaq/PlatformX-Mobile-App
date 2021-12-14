@@ -122,7 +122,7 @@ const OrgStdProfile: FC<props> = ({navigation, route}) => {
         />
         {Object.keys(data).length !== 0 ? (
           <ScrollView>
-            <View style={[styles.scroll]}>
+            <View style={[styles.scroll, {marginBottom: 10}]}>
               <View
                 style={[
                   styles.container,

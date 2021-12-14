@@ -10,13 +10,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {Height, Sizes, Width} from '../Constants/Size';
-import CheckBox from '../Components/CheckBox';
-import {useStateValue} from '../Store/StateProvider';
-import Divider from '../Components/Divider';
-import CustomButton from '../Components/CustomButton';
-import Bullet from '../Components/Bullet';
-import HelpText from '../Components/HelpText';
+import {Height, Sizes, Width} from '../../Constants/Size';
+import CheckBox from '../../Components/CheckBox';
+import {useStateValue} from '../../Store/StateProvider';
+import Divider from '../../Components/Divider';
+import CustomButton from '../../Components/CustomButton';
+import Bullet from '../../Components/Bullet';
+import HelpText from '../../Components/HelpText';
 
 type props = {
   isShow: boolean;
