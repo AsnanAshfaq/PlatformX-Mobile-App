@@ -22,6 +22,7 @@ const MyCode: FC<props> = ({navigation, route}) => {
   const [code, setCode] = useState({
     input: '',
     output: '',
+    error: '',
   });
   const [loading, setloading] = useState(true);
   const [error, seterror] = useState('');
@@ -39,7 +40,7 @@ const MyCode: FC<props> = ({navigation, route}) => {
 
         fetch(response.data.data.result.streams.source.uri)
           .then(res => {
-            console.log('Response is', res);
+            console.log('Response is', res.text());
             return res.text();
           })
           .then(json => {
@@ -52,20 +53,38 @@ const MyCode: FC<props> = ({navigation, route}) => {
           });
 
         // fetching output code
-        fetch(response.data.data.result.streams.output.uri)
-          .then(res => {
-            return res.text();
-          })
-          .then(json => {
-            setCode(props => {
-              return {
-                ...props,
-                output: json,
-              };
+        if (response.data.data.result.streams.output !== null) {
+          fetch(response.data.data.result.streams.output.uri)
+            .then(res => {
+              return res.text();
+            })
+            .then(json => {
+              setCode(props => {
+                return {
+                  ...props,
+                  output: json,
+                };
+              });
+              // make loading false
+              setloading(false);
             });
-            // make loading false
-            setloading(false);
-          });
+        }
+        if (response.data.data.result.streams.error !== null) {
+          fetch(response.data.data.result.streams.error.uri)
+            .then(res => {
+              return res.text();
+            })
+            .then(json => {
+              setCode(props => {
+                return {
+                  ...props,
+                  error: json,
+                };
+              });
+              // make loading false
+              setloading(false);
+            });
+        }
       })
       .catch(err => {
         if (err.response) {
@@ -116,16 +135,30 @@ const MyCode: FC<props> = ({navigation, route}) => {
               />
             </View>
 
-            <View style={[styles.container, {flex: 1}]}>
-              <Text style={[styles.heading, {color: theme.TEXT_COLOR}]}>
-                Output{' '}
-              </Text>
-              <View style={[styles.container, styles.codeContainer]}>
-                <Text style={[{color: theme.DIM_TEXT_COLOR}]}>
-                  {code.output}
+            {code.output !== '' && (
+              <View style={[styles.container, {flex: 1}]}>
+                <Text style={[styles.heading, {color: theme.TEXT_COLOR}]}>
+                  Output{' '}
                 </Text>
+                <View style={[styles.container, styles.codeContainer]}>
+                  <Text style={[{color: theme.DIM_TEXT_COLOR}]}>
+                    {code.output}
+                  </Text>
+                </View>
               </View>
-            </View>
+            )}
+            {code.error !== '' && (
+              <View style={[styles.container, {flex: 1}]}>
+                <Text style={[styles.heading, {color: theme.ERROR_TEXT_COLOR}]}>
+                  Error{' '}
+                </Text>
+                <View style={[styles.container, styles.codeContainer]}>
+                  <Text style={[{color: theme.DIM_TEXT_COLOR}]}>
+                    {code.error}
+                  </Text>
+                </View>
+              </View>
+            )}
           </View>
         </ScrollView>
       ) : !loading && error !== '' ? (
