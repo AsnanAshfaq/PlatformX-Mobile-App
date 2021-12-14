@@ -96,7 +96,10 @@ const ViewWorkshop: FC<props> = ({navigation, route, screen, ID}) => {
             setmodal(props => {
               return {
                 ...props,
-                joinModal: true,
+                std: {
+                  ...props.std,
+                  join: true,
+                },
               };
             });
             ToastAndroid.show(result.data.success, 1500);
@@ -122,7 +125,10 @@ const ViewWorkshop: FC<props> = ({navigation, route, screen, ID}) => {
     setmodal(props => {
       return {
         ...props,
-        viewDetails: true,
+        std: {
+          ...props.std,
+          view: true,
+        },
       };
     });
   };

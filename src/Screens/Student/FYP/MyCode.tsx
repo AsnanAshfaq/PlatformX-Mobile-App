@@ -31,12 +31,15 @@ const MyCode: FC<props> = ({navigation, route}) => {
   const getData = async () => {
     setloading(true);
     seterror('');
+
     axios
       .get(`/api/submission/${ID}/`)
       .then(response => {
         // fetching input code
+
         fetch(response.data.data.result.streams.source.uri)
           .then(res => {
+            console.log('Response is', res);
             return res.text();
           })
           .then(json => {

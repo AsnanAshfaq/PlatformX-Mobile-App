@@ -18,16 +18,10 @@ const ICON_SIZE = Width * 0.07;
 
 type prop = {
   navigation: any;
-  handleBookmark: () => void;
   handleReport: () => void;
   handleShare: () => void;
 };
-const PopUpMenu: FC<prop> = ({
-  navigation,
-  handleBookmark,
-  handleReport,
-  handleShare,
-}) => {
+const PopUpMenu: FC<prop> = ({navigation, handleReport, handleShare}) => {
   const [{theme}, dispatch] = useStateValue();
   return (
     <Menu>
@@ -62,26 +56,6 @@ const PopUpMenu: FC<prop> = ({
             height: 35,
           },
         }}>
-        <MenuOption onSelect={() => handleBookmark()}>
-          <View style={styles.menuOptionContainer}>
-            <Ionicons
-              name={'bookmark'}
-              color={theme.ICON_COLOR}
-              size={ICON_SIZE * 0.8}
-            />
-            <View style={styles.textContainer}>
-              <Text
-                style={[
-                  styles.menuOptionText,
-                  {
-                    color: theme.TEXT_COLOR,
-                  },
-                ]}>
-                Bookmark
-              </Text>
-            </View>
-          </View>
-        </MenuOption>
         <MenuOption onSelect={() => handleShare()}>
           <View style={styles.menuOptionContainer}>
             <LinkedIn />

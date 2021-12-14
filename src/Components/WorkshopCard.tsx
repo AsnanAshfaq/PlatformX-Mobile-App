@@ -25,6 +25,7 @@ import CustomButton from './CustomButton';
 //@ts-ignore
 import {LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET} from 'react-native-dotenv';
 import LinkedInSignInModal from '../Modals/LinkedInSignInModal';
+import ReportModal from '../Modals/ReportModal';
 
 const ICON_SIZE = Width * 0.07;
 
@@ -69,6 +70,7 @@ const WorkshopCard: FC<props> = ({navigation, source, workshopDetail}) => {
   const [ProfileImageLoading, setProfileImageLoading] = useState(true); // org. image
   const [modal, setmodal] = useState({
     linkedIn: false,
+    report: false,
   });
   const [{theme}, dispatch] = useStateValue();
   const ref = createRef<LinkedInModal>();
@@ -87,12 +89,33 @@ const WorkshopCard: FC<props> = ({navigation, source, workshopDetail}) => {
     });
   };
 
-  const handleBookmark = () => {};
-  const handleReport = () => {};
+  const handleReport = () => {
+    setmodal(props => {
+      return {
+        ...props,
+        report: true,
+      };
+    });
+  };
+
+  const Report = () => {
+    setmodal(props => {
+      return {
+        ...props,
+        report: false,
+      };
+    });
+    // make api call
+    setTimeout(() => {
+      ToastAndroid.show(`${workshopDetail.topic} has been reported`, 1500);
+    }, 2000);
+  };
   const handleShare = () => {
-    console.log('Share is', modal.linkedIn);
-    setmodal({
-      linkedIn: true,
+    setmodal(props => {
+      return {
+        ...props,
+        linkedIn: true,
+      };
     });
   };
 
@@ -126,10 +149,28 @@ const WorkshopCard: FC<props> = ({navigation, source, workshopDetail}) => {
       <LinkedInSignInModal
         isShow={modal.linkedIn}
         toggleModal={() =>
-          setmodal({
-            linkedIn: false,
+          setmodal(props => {
+            return {
+              ...props,
+              linkedIn: false,
+            };
           })
         }
+      />
+
+      <ReportModal
+        isShow={modal.report}
+        title={'Report'}
+        description={`Do you really want to report ${workshopDetail.topic} workshop?`}
+        toggleModal={() =>
+          setmodal(props => {
+            return {
+              ...props,
+              linkedIn: false,
+            };
+          })
+        }
+        handleReport={() => Report()}
       />
 
       {source === 'student' && (
@@ -174,7 +215,6 @@ const WorkshopCard: FC<props> = ({navigation, source, workshopDetail}) => {
               <STDPopMenu
                 navigation={navigation}
                 handleShare={handleShare}
-                handleBookmark={handleBookmark}
                 handleReport={handleReport}
               />
             </View>
