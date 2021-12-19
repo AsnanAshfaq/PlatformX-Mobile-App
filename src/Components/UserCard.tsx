@@ -94,10 +94,6 @@ const styles = StyleSheet.create({
     marginVertical: Width * 0.01,
     borderRadius: 10,
     padding: 10,
-    // shadowOpacity: 1,
-    // shadowRadius: 25,
-    // shadowOffset: {width: 10, height: 12},
-    // elevation: 30,
   },
   imageContainer: {
     margin: 2,

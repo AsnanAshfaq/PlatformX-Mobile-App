@@ -64,10 +64,6 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
                   '....'
                 : chat.message[0].message
               : 'Tap to start chatting'}
-            {/* {chat.message.length !== 0 &&
-            chat.message.message.length > MAX_TEXT_LENGTH
-              ? chat.message.message.substring(0, MAX_TEXT_LENGTH - 4) + '....'
-              : chat.message.message} */}
           </Text>
         </View>
         <View style={styles.sideContainer}>

@@ -1,9 +1,21 @@
 import React, {FC, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import CustomHeader from '../Components/CustomHeader';
 import {Sizes, Width} from '../Constants/Size';
 import {useStateValue} from '../Store/StateProvider';
-import {darkColors, lightColors, nebulaColors} from '../Constants/Colors';
+import {
+  darkColors,
+  lightColors,
+  nebulaColors,
+  monsterColors,
+  squashColors,
+} from '../Constants/Colors';
 import {Tick} from '../Components/Icons';
 import LottieView from 'lottie-react-native';
 
@@ -66,7 +78,9 @@ const Card: FC<Props> = ({name, showTick, theme, onPress}) => {
           />
         </View>
       </TouchableOpacity>
-      <Text style={[styles.nameText, {color: theme.TEXT_COLOR}]}>{name}</Text>
+      <Text style={[styles.nameText, {color: state.theme.TEXT_COLOR}]}>
+        {name}
+      </Text>
     </View>
   );
 };
@@ -100,51 +114,76 @@ const Theme: FC<props> = ({navigation}) => {
         navigation={navigation}
         back
       />
-      {/* lottie container */}
-      <View style={styles.animationContainer}>
-        <LottieView
-          source={require('../../assets/lottie/paint.json')}
-          style={styles.animation}
-          autoPlay
-          loop={true}
-          autoSize
-          resizeMode={'cover'}
-          colorFilters={[
-            {
-              keypath: 'brush-logo',
-              color: theme.GREEN_COLOR,
-            },
-            {
-              keypath: 'Pre-comp1',
-              color: theme.GREEN_COLOR,
-            },
-          ]}
-        />
-      </View>
 
       {/* theme container  */}
-      <View style={styles.row}>
-        <Card
-          name={'Light'}
-          theme={lightColors}
-          onPress={() => setTheme('light')}
-          showTick={state.themeName === 'light' ? true : false}
-        />
-        <Card
-          name={'Dark'}
-          theme={darkColors}
-          onPress={() => setTheme('dark')}
-          showTick={state.themeName === 'dark' ? true : false}
-        />
-      </View>
-      <View style={styles.row}>
-        <Card
-          name={'Nebula'}
-          theme={nebulaColors}
-          onPress={() => setTheme('nebula')}
-          showTick={state.themeName === 'nebula' ? true : false}
-        />
-      </View>
+      <ScrollView>
+        <View style={{flex: 1}}>
+          {/* lottie container */}
+          <View style={styles.animationContainer}>
+            <LottieView
+              source={require('../../assets/lottie/paint.json')}
+              style={styles.animation}
+              autoPlay
+              loop={true}
+              autoSize
+              resizeMode={'cover'}
+              colorFilters={[
+                {
+                  keypath: 'brush-logo',
+                  color: theme.GREEN_COLOR,
+                },
+                {
+                  keypath: 'Pre-comp1',
+                  color: theme.GREEN_COLOR,
+                },
+              ]}
+            />
+          </View>
+
+          <View style={styles.row}>
+            <Card
+              name={'Light'}
+              theme={lightColors}
+              onPress={() => setTheme('light')}
+              showTick={state.themeName === 'light' ? true : false}
+            />
+            <Card
+              name={'Dark'}
+              theme={darkColors}
+              onPress={() => setTheme('dark')}
+              showTick={state.themeName === 'dark' ? true : false}
+            />
+          </View>
+          <View style={styles.row}>
+            <Card
+              name={'Nebula'}
+              theme={nebulaColors}
+              onPress={() => setTheme('nebula')}
+              showTick={state.themeName === 'nebula' ? true : false}
+            />
+            <Card
+              name={'Monster'}
+              theme={monsterColors}
+              onPress={() => setTheme('monster')}
+              showTick={state.themeName === 'monster' ? true : false}
+            />
+          </View>
+          <View style={styles.row}>
+            <Card
+              name={'Squash'}
+              theme={squashColors}
+              onPress={() => setTheme('squash')}
+              showTick={state.themeName === 'squash' ? true : false}
+            />
+            {/* <Card
+              name={'Monster'}
+              theme={monsterColors}
+              onPress={() => setTheme('monster')}
+              showTick={state.themeName === 'monster' ? true : false}
+            /> */}
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 };

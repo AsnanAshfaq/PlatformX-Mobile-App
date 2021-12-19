@@ -1,7 +1,13 @@
-import {darkColors, lightColors, nebulaColors} from '../Constants/Colors';
+import {
+  darkColors,
+  lightColors,
+  nebulaColors,
+  monsterColors,
+  squashColors,
+} from '../Constants/Colors';
 export const initialState = {
-  theme: nebulaColors,
-  themeName: 'nebula',
+  theme: squashColors,
+  themeName: 'squash',
   userType: '',
   user: {},
   isSignedIn: false,
@@ -18,7 +24,11 @@ export const reducer = (state, action) => {
             ? lightColors
             : action.payload === 'dark'
             ? darkColors
-            : action.payload === 'nebula' && nebulaColors,
+            : action.payload === 'nebula'
+            ? nebulaColors
+            : action.payload === 'monster'
+            ? monsterColors
+            : action.payload === 'squash' && squashColors,
       };
 
     case 'SET_USER':
