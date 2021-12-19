@@ -133,7 +133,6 @@ const FYP: FC<props> = ({navigation}) => {
         try {
           axios.get(`/api/fyp/search/?${filterQuery}`).then(response => {
             setIsLoading(false);
-            console.log('Response is', response.data['error']);
             if (response.data['error']) {
               setFyps([]);
               setSearching({

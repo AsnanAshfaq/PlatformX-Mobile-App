@@ -21,6 +21,8 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
   const [ImageLoading, setImageLoading] = useState(true);
   const [state, dispatch] = useStateValue();
 
+  console.log('Chat is', chat.message);
+
   const onPress = () => {
     navigation.navigate('ChatScreen', {username: chat.user.username});
   };
@@ -54,10 +56,18 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
                 .slice(1, chat.user.username.length)
                 .toLowerCase()}
           </Text>
-          <Text style={[styles.message, {color: state.theme.TEXT_COLOR}]}>
-            {chat.message.message.length > MAX_TEXT_LENGTH
+          <Text style={[styles.message, {color: state.theme.DIM_TEXT_COLOR}]}>
+            {chat.message.length > 0
+              ? chat.message.length !== 0 &&
+                chat.message.length > MAX_TEXT_LENGTH
+                ? chat.message[0].message.substring(0, MAX_TEXT_LENGTH - 4) +
+                  '....'
+                : chat.message[0].message
+              : 'Tap to start chatting'}
+            {/* {chat.message.length !== 0 &&
+            chat.message.message.length > MAX_TEXT_LENGTH
               ? chat.message.message.substring(0, MAX_TEXT_LENGTH - 4) + '....'
-              : chat.message.message}
+              : chat.message.message} */}
           </Text>
         </View>
         <View style={styles.sideContainer}>
@@ -66,15 +76,20 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
               <Ionicons
                 name={'ellipsis-vertical'}
                 size={ICON_SIZE * 0.8}
-                color={state.theme.TAB_BAR_ACTIVE_COLOR}
+                color={state.theme.ICON_COLOR}
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.dateContainer}>
-            <Text style={[styles.dateText, {color: state.theme.TEXT_COLOR}]}>
-              {new Date(chat.message.created_at).toDateString().slice(0, 10)}
-            </Text>
-          </View>
+          {chat.message.length > 0 && (
+            <View style={styles.dateContainer}>
+              <Text
+                style={[styles.dateText, {color: state.theme.DIM_TEXT_COLOR}]}>
+                {new Date(chat.message[0].created_at)
+                  .toDateString()
+                  .slice(0, 10)}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -90,7 +105,7 @@ const styles = StyleSheet.create({
     marginVertical: Width * 0.02,
     // minHeight: Height * 0.35,
     // maxHeight: Height * 0.4,
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     shadowOpacity: 1,
     shadowRadius: 25,
@@ -115,11 +130,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   username: {
-    fontSize: Sizes.normal * 1.2,
+    fontSize: Sizes.normal,
     // fontWeight: 'bold',
   },
   message: {
-    fontSize: Sizes.normal * 0.9,
+    fontSize: Sizes.normal * 0.7,
   },
   sideContainer: {
     flex: 0.2,
@@ -136,6 +151,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   dateText: {
-    fontSize: Sizes.small * 0.8,
+    fontSize: Sizes.small * 0.7,
   },
 });
