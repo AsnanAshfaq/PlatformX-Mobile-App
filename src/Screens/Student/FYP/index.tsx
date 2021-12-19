@@ -29,9 +29,11 @@ const FYP: FC<props> = ({navigation}) => {
   const [Searching, setSearching] = useState<{
     isSearching: boolean;
     query: string;
+    filter: string;
   }>({
     isSearching: false,
     query: '',
+    filter: '',
   });
   const [modals, setmodals] = useState({
     filter: false,
@@ -60,6 +62,7 @@ const FYP: FC<props> = ({navigation}) => {
       setSearching({
         isSearching: false,
         query: '',
+        filter: '',
       });
     });
   };
@@ -69,23 +72,27 @@ const FYP: FC<props> = ({navigation}) => {
     setSearching({
       isSearching: true,
       query: query,
+      filter: '',
     });
     try {
-      //   axios.get(`/api/hackathon/search/?q=${query}`).then(response => {
-      //     setFyps(response.data);
-      //     setIsLoading(false);
-      //     setSearching(props => {
-      //       return {
-      //         isSearching: false,
-      //         query: props.query,
-      //       };
-      //     });
-      //   });
+      axios.get(`/api/fyp/search/?q=${query}`).then(response => {
+        setFyps(response.data);
+        setIsLoading(false);
+        setSearching(props => {
+          return {
+            isSearching: false,
+            query: props.query,
+            filter: '',
+          };
+        });
+      });
     } catch (error: any) {
+      setIsLoading(false);
       setSearching(props => {
         return {
           isSearching: false,
           query: props.query,
+          filter: '',
         };
       });
       ToastAndroid.show(error.data.response.error, 1500);
@@ -107,22 +114,51 @@ const FYP: FC<props> = ({navigation}) => {
           // add tag and subtag in filter query string if subtag is not empty
           if (subtag !== '') {
             if (filterQuery === '') {
-              filterQuery += `${tag}=${subtag.toLowerCase()}`;
+              filterQuery += `${tag}=${subtag}`;
             } else {
               // append & if filter query is not empty
-              filterQuery += `&${tag}=${subtag.toLowerCase()}`;
+              filterQuery += `&${tag}=${subtag}`;
             }
           }
         });
       }
     }
     if (filterQuery !== '') {
-      // call the api if query is not empty
-      try {
-        axios
-          .get(`/api/hackathon/search/?q=${filterQuery}`)
-          .then(response => {});
-      } catch (error) {}
+      if (Searching.query === '') {
+        setSearching({
+          isSearching: true,
+          query: '',
+          filter: filterQuery,
+        });
+        try {
+          axios.get(`/api/fyp/search/?${filterQuery}`).then(response => {
+            setIsLoading(false);
+            console.log('Response is', response.data['error']);
+            if (response.data['error']) {
+              setFyps([]);
+              setSearching({
+                isSearching: false,
+                query: '',
+                filter: '',
+              });
+            } else {
+              setFyps(response.data);
+              setSearching({
+                isSearching: false,
+                query: '',
+                filter: filterQuery,
+              });
+            }
+          });
+        } catch (error) {
+          setIsLoading(false);
+          setSearching({
+            isSearching: false,
+            query: '',
+            filter: '',
+          });
+        }
+      }
     }
   };
 
@@ -165,7 +201,7 @@ const FYP: FC<props> = ({navigation}) => {
             };
           })
         }
-        applyFilters={filters => console.log('Filters selected are', filters)}
+        applyFilters={filters => applyFilters(filters)}
       />
       {!IsLoading && (
         <CustomSearch
@@ -225,6 +261,8 @@ const FYP: FC<props> = ({navigation}) => {
           <Text style={[styles.noMoreText, {color: theme.TEXT_COLOR}]}>
             {Searching.query !== '' && fyp.length === 0
               ? `No result Found for ${Searching.query}`
+              : Searching.filter !== '' && fyp.length === 0
+              ? 'No result found'
               : "No fyp's yet"}
           </Text>
           <TouchableOpacity onPress={() => setIsLoading(true)}>

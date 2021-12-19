@@ -37,6 +37,8 @@ const ViewInternship: FC<props> = ({navigation, route, screen, ID}) => {
     viewDetails: false,
   });
 
+  console.log('Internship id is', ID);
+
   const applyNow = () => {
     navigation.navigate('Apply_Now', {
       ID: internshipData.id,

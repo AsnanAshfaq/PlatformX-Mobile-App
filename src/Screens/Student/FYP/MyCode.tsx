@@ -37,13 +37,13 @@ const MyCode: FC<props> = ({navigation, route}) => {
       .get(`/api/submission/${ID}/`)
       .then(response => {
         // fetching input code
-
         fetch(response.data.data.result.streams.source.uri)
           .then(res => {
             console.log('Response is', res.text());
             return res.text();
           })
           .then(json => {
+            console.log('Input is', json);
             setCode(props => {
               return {
                 ...props,

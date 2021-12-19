@@ -263,7 +263,7 @@ const OrganizationDrawer: FC<props> = ({navigation}) => {
         <Text style={[styles.location, {color: state.theme.DIM_TEXT_COLOR}]}>
           Based in {state.user.location}
         </Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             // navigation.closeDrawer();
             navigation.navigate('Organization_Profile_Home');
@@ -276,7 +276,7 @@ const OrganizationDrawer: FC<props> = ({navigation}) => {
             style={[styles.profileButtonText, {color: state.theme.TEXT_COLOR}]}>
             View Profile
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       {/* drawer items list  */}
       {OrganizationDrawerItems.map(item => (
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     alignItems: 'flex-start',
-    marginTop: 20,
+    marginBottom: 20,
     marginHorizontal: Width * 0.04,
   },
   footerText: {},

@@ -1,6 +1,6 @@
 import {darkColors, lightColors, nebulaColors} from '../Constants/Colors';
 export const initialState = {
-  theme: darkColors,
+  theme: lightColors,
   themeName: 'dark',
   userType: '',
   user: {},

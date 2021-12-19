@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 10, height: 12},
     elevation: 5,
     marginHorizontal: Width * 0.04,
+    marginBottom: 10,
   },
   contentContainer: {
     marginHorizontal: Width * 0.04,

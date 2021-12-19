@@ -20,9 +20,56 @@ const INTERNSHIP_FILTER_DATA = [
     subtag: ['Applied', 'Open', 'Ended'],
   },
   {
-    id: 'duration',
-    tag: 'Duration (in months)',
-    subtag: ['2', '4', '6', '8'],
+    id: 'technologies',
+    tag: 'Technologies',
+    subtag: [
+      'Angular',
+      'Android',
+      'ASP.NET',
+      'Django',
+      'Express',
+      'Firebase',
+      'Flask',
+      'Flutter',
+      'Java',
+      'Keras',
+      'Kotlin',
+      'Laravel',
+      'MongoDB',
+      'MySQL',
+      'Node.js',
+      'Objective-C',
+      'PostgreSQL',
+      'Pytorch',
+      'Rails',
+      'React',
+      'React Native',
+      'Revel',
+      'Spacy',
+      'Spring',
+      'Swift',
+      'TensorFlow',
+      'Vue.js',
+      'Xamarin',
+    ],
+  },
+  {
+    id: 'categories',
+    tag: 'Categories',
+    subtag: [
+      'Artificial Intelligence',
+      'Backend Development',
+      'Cloud Computing',
+      'Desktop Development',
+      'DevOps Engineering',
+      'Database Development',
+      'Frontend Development',
+      'Full-Stack Development',
+      'Machine Learning',
+      'Mobile Development',
+      'Security Engineering',
+      'Web Development',
+    ],
   },
 ];
 
@@ -90,7 +137,7 @@ const SubTagList: FC<Props> = ({Tag, list, CheckedValues}) => {
       {list.map(subtag => (
         <View style={{flexDirection: 'row'}} key={subtag}>
           <CheckBox
-            size={15}
+            size={18}
             onPress={isCheck => {
               handleCheckedValues(isCheck, Tag, subtag);
             }}
