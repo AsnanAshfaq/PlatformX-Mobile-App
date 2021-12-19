@@ -81,7 +81,8 @@ const Participants: FC<props> = ({navigation, route}) => {
             keyExtractor={(item: any, index) => `${item.id}`}
             data={participants}
             ListHeaderComponent={() => (
-              <View style={{marginVertical: 10}}>
+              <View
+                style={{marginVertical: 10, marginHorizontal: Width * 0.02}}>
                 <Text style={[styles.smallText, {color: theme.DIM_TEXT_COLOR}]}>
                   See who is participating in this hackathon
                 </Text>
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
-    marginHorizontal: Width * 0.04,
+    // marginHorizontal: Width * 0.04,
     // marginVertical: 10,
   },
   container: {

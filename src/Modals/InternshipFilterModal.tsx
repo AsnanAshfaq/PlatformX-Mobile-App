@@ -21,8 +21,19 @@ const INTERNSHIP_FILTER_DATA = [
   },
   {
     id: 'duration',
-    tag: 'Duration (in months)',
-    subtag: ['2', '4', '6', '8'],
+    tag: 'Duration (in Months)',
+    subtag: ['2', '4', '6', '8', '10'],
+  },
+
+  {
+    id: 'stipend',
+    tag: 'Stipend (in Rupees)',
+    subtag: [
+      'Less than 4,000',
+      '4,000-10,000',
+      '10,000-15,000',
+      '15,000-25,000',
+    ],
   },
 ];
 

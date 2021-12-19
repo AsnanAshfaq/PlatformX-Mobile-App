@@ -76,15 +76,24 @@ const FYP: FC<props> = ({navigation}) => {
     });
     try {
       axios.get(`/api/fyp/search/?q=${query}`).then(response => {
-        setFyps(response.data);
         setIsLoading(false);
-        setSearching(props => {
-          return {
+        if (response.data['error']) {
+          setFyps([]);
+          setSearching({
             isSearching: false,
-            query: props.query,
+            query: '',
             filter: '',
-          };
-        });
+          });
+        } else {
+          setFyps(response.data);
+          setSearching(props => {
+            return {
+              isSearching: false,
+              query: props.query,
+              filter: '',
+            };
+          });
+        }
       });
     } catch (error: any) {
       setIsLoading(false);

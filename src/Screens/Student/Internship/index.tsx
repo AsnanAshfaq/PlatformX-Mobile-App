@@ -30,9 +30,11 @@ const Internship: FC<props> = ({navigation}) => {
   const [Searching, setSearching] = useState<{
     isSearching: boolean;
     query: string;
+    filter: string;
   }>({
     isSearching: false,
     query: '',
+    filter: '',
   });
   const [modal, setmodal] = useState({
     filter: false,
@@ -66,6 +68,7 @@ const Internship: FC<props> = ({navigation}) => {
       setSearching({
         isSearching: false,
         query: '',
+        filter: '',
       });
     });
   };
@@ -75,23 +78,36 @@ const Internship: FC<props> = ({navigation}) => {
     setSearching({
       isSearching: true,
       query: query,
+      filter: '',
     });
     try {
-      axios.get(`/api/hackathon/search/?q=${query}`).then(response => {
-        setInterships(response.data);
+      axios.get(`/api/internship/search/?q=${query}`).then(response => {
         setIsLoading(false);
-        setSearching(props => {
-          return {
+        if (response.data['error']) {
+          setInterships([]);
+          setSearching({
             isSearching: false,
-            query: props.query,
-          };
-        });
+            query: '',
+            filter: '',
+          });
+        } else {
+          setInterships(response.data);
+          setSearching(props => {
+            return {
+              isSearching: false,
+              query: props.query,
+              filter: '',
+            };
+          });
+        }
       });
     } catch (error: any) {
+      setIsLoading(false);
       setSearching(props => {
         return {
           isSearching: false,
           query: props.query,
+          filter: '',
         };
       });
       ToastAndroid.show(error.data.response.error, 1500);
@@ -190,7 +206,9 @@ const Internship: FC<props> = ({navigation}) => {
           <Text style={[styles.noMoreText, {color: theme.TEXT_COLOR}]}>
             {Searching.query !== '' && internships.length === 0
               ? `No result Found for ${Searching.query}`
-              : 'No internships yet'}
+              : Searching.filter !== '' && internships.length === 0
+              ? 'No result found'
+              : "No internship's yet"}
           </Text>
           <TouchableOpacity onPress={() => setIsLoading(true)}>
             <Text style={[styles.refreshText, {color: theme.GREEN_COLOR}]}>
