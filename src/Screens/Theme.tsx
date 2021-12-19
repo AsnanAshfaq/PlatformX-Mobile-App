@@ -15,6 +15,7 @@ import {
   nebulaColors,
   monsterColors,
   squashColors,
+  lapisColors,
 } from '../Constants/Colors';
 import {Tick} from '../Components/Icons';
 import LottieView from 'lottie-react-native';
@@ -175,12 +176,12 @@ const Theme: FC<props> = ({navigation}) => {
               onPress={() => setTheme('squash')}
               showTick={state.themeName === 'squash' ? true : false}
             />
-            {/* <Card
-              name={'Monster'}
-              theme={monsterColors}
-              onPress={() => setTheme('monster')}
-              showTick={state.themeName === 'monster' ? true : false}
-            /> */}
+            <Card
+              name={'Lapis'}
+              theme={lapisColors}
+              onPress={() => setTheme('lapis')}
+              showTick={state.themeName === 'lapis' ? true : false}
+            />
           </View>
         </View>
       </ScrollView>

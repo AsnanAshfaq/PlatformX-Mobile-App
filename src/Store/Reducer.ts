@@ -4,10 +4,11 @@ import {
   nebulaColors,
   monsterColors,
   squashColors,
+  lapisColors,
 } from '../Constants/Colors';
 export const initialState = {
-  theme: squashColors,
-  themeName: 'squash',
+  theme: lapisColors,
+  themeName: 'lapis',
   userType: '',
   user: {},
   isSignedIn: false,
@@ -28,7 +29,9 @@ export const reducer = (state, action) => {
             ? nebulaColors
             : action.payload === 'monster'
             ? monsterColors
-            : action.payload === 'squash' && squashColors,
+            : action.payload === 'squash'
+            ? squashColors
+            : action.payload === 'lapis' && lapisColors,
       };
 
     case 'SET_USER':
