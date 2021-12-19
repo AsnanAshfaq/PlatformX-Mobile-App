@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {FC, useState, useEffect} from 'react';
 import {
   StyleSheet,
@@ -50,17 +51,48 @@ const Chat: FC<props> = ({navigation}) => {
     getChatList().then(() => setRefreshing(false));
   };
 
-  const handleSearch = () => {
-    console.log('Handling search');
+  const handleSearch = (query: string) => {
+    // set the searching to true
+    setSearching({
+      isSearching: true,
+      query: query,
+    });
+
+    try {
+      axios.get(`/chat/search/?q=${query}`).then(response => {
+        setIsLoading(false);
+        if (response.data['error']) {
+          setChatList([]);
+          setSearching({
+            isSearching: false,
+            query: '',
+          });
+        } else {
+          setChatList(response.data);
+          setSearching(props => {
+            return {
+              isSearching: false,
+              query: props.query,
+            };
+          });
+        }
+      });
+    } catch (error: any) {
+      setIsLoading(false);
+      setSearching(props => {
+        return {
+          isSearching: false,
+          query: '',
+        };
+      });
+      ToastAndroid.show(error.data.response.error, 1500);
+    }
   };
 
   useEffect(() => {
     getChatList();
-    return () => {
-      setIsLoading(true);
-      setChatList([]);
-    };
-  }, []);
+  }, [isLoading]);
+
   return (
     <View
       style={[styles.parent, {backgroundColor: theme.SCREEN_BACKGROUND_COLOR}]}>
@@ -126,9 +158,7 @@ const Chat: FC<props> = ({navigation}) => {
           </View>
         </>
       ) : (
-        <ChatSkeleton
-          showSearchSkeleton={!Searching.isSearching || refreshing}
-        />
+        <ChatSkeleton showSearchSkeleton={!Searching.isSearching} />
       )}
     </View>
   );

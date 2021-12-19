@@ -51,10 +51,11 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
         {/* name container  */}
         <View style={styles.messageContainer}>
           <Text style={[styles.username, {color: state.theme.TEXT_COLOR}]}>
-            {chat.user.username.slice(0, 1).toUpperCase() +
+            {/* {chat.user.username.slice(0, 1).toUpperCase() +
               chat.user.username
                 .slice(1, chat.user.username.length)
-                .toLowerCase()}
+                .toLowerCase()} */}
+            {chat.user.username}
           </Text>
           <Text style={[styles.message, {color: state.theme.DIM_TEXT_COLOR}]}>
             {chat.message.length > 0
@@ -68,13 +69,13 @@ const ChatCard: FC<props> = ({navigation, chat}) => {
         </View>
         <View style={styles.sideContainer}>
           <View style={styles.optionContainer}>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Ionicons
                 name={'ellipsis-vertical'}
                 size={ICON_SIZE * 0.8}
                 color={state.theme.ICON_COLOR}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           {chat.message.length > 0 && (
             <View style={styles.dateContainer}>
