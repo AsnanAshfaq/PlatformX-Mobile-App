@@ -21,13 +21,13 @@ const INTERNSHIP_FILTER_DATA = [
   },
   {
     id: 'duration',
-    tag: 'Duration (in Months)',
+    tag: 'Duration',
     subtag: ['2', '4', '6', '8', '10'],
   },
 
   {
     id: 'stipend',
-    tag: 'Stipend (in Rupees)',
+    tag: 'Stipend',
     subtag: [
       'Less than 4,000',
       '4,000-10,000',
@@ -184,6 +184,15 @@ const InternshipFilterModal: FC<props> = ({
                     },
                   ]}>
                   {filterItem.tag}
+                  <Text
+                    style={{
+                      fontSize: Sizes.normal * 0.8,
+                      color: theme.DIM_TEXT_COLOR,
+                    }}>
+                    {filterItem.tag === 'Duration'
+                      ? '  ( in months )'
+                      : filterItem.tag === 'Stipend' && '  ( in rupees )'}
+                  </Text>
                 </Text>
                 {/* list of subtags  */}
                 <SubTagList

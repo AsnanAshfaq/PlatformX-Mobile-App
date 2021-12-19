@@ -111,14 +111,14 @@ const Index: FC<props> = ({navigation}) => {
       />
 
       {/* notification settings  */}
-      <Card
+      {/* <Card
         IconComponent={() => (
           <Entypo name={'bell'} size={ICON_SIZE} color={theme.GREEN_COLOR} />
         )}
         title={'Notifications'}
         description={'Manage your mail notifications.'}
         onPress={() => console.log('Setting notifications on/off')}
-      />
+      /> */}
     </View>
   );
 };

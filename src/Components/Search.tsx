@@ -126,7 +126,7 @@ const Search: FC<props> = ({
               style={{marginRight: 8}}>
               <Entypo
                 name={'cross'}
-                size={Width * 0.06}
+                size={Width * 0.064}
                 style={{
                   color: theme.ICON_COLOR,
                 }}

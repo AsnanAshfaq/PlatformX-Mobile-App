@@ -114,6 +114,68 @@ const Internship: FC<props> = ({navigation}) => {
     }
   };
 
+  const applyFilters = (
+    filter: Array<{subtag: Array<string>; tag: string}>,
+  ) => {
+    // make query string to be included in api call
+    let filterQuery = '';
+    // only if filter is not empty
+    if (filter.length > 0) {
+      for (let i = 0; i < filter.length; i++) {
+        // get tag
+        const tag = filter[i].tag.toLowerCase();
+        // get subtags
+        filter[i].subtag.forEach(subtag => {
+          // add tag and subtag in filter query string if subtag is not empty
+          if (subtag !== '') {
+            if (filterQuery === '') {
+              filterQuery += `${tag}=${subtag}`;
+            } else {
+              // append & if filter query is not empty
+              filterQuery += `&${tag}=${subtag}`;
+            }
+          }
+        });
+      }
+    }
+    if (filterQuery !== '') {
+      if (Searching.query === '') {
+        setSearching({
+          isSearching: true,
+          query: '',
+          filter: filterQuery,
+        });
+        try {
+          axios.get(`/api/internship/search/?${filterQuery}`).then(response => {
+            setIsLoading(false);
+            if (response.data['error']) {
+              setInterships([]);
+              setSearching({
+                isSearching: false,
+                query: '',
+                filter: '',
+              });
+            } else {
+              setInterships(response.data);
+              setSearching({
+                isSearching: false,
+                query: '',
+                filter: filterQuery,
+              });
+            }
+          });
+        } catch (error) {
+          setIsLoading(false);
+          setSearching({
+            isSearching: false,
+            query: '',
+            filter: '',
+          });
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     getData();
   }, [IsLoading]);
@@ -147,7 +209,7 @@ const Internship: FC<props> = ({navigation}) => {
             };
           })
         }
-        applyFilters={filters => console.log('Filters selected are', filters)}
+        applyFilters={filters => applyFilters(filters)}
       />
 
       {!IsLoading && (
