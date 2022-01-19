@@ -139,7 +139,12 @@ const MyCode: FC<props> = ({navigation, route}) => {
             </View>
 
             {code.output !== '' && (
-              <View style={[styles.container, {flex: 1}]}>
+              <View
+                style={[
+                  styles.container,
+                  styles.card,
+                  {flex: 1, backgroundColor: theme.CARD_BACKGROUND_COLOR},
+                ]}>
                 <Text style={[styles.heading, {color: theme.TEXT_COLOR}]}>
                   Output{' '}
                 </Text>
@@ -211,6 +216,11 @@ const styles = StyleSheet.create({
   codeContainer: {
     flex: 1,
     marginHorizontal: Width * 0.04,
+  },
+
+  card: {
+    marginHorizontal: Width * 0.04,
+    padding: 10,
   },
   heading: {
     fontSize: Sizes.normal * 1.1,

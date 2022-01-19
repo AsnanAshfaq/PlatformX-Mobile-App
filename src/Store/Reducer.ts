@@ -7,8 +7,8 @@ import {
   lapisColors,
 } from '../Constants/Colors';
 export const initialState = {
-  theme: lapisColors,
-  themeName: 'lapis',
+  theme: darkColors,
+  themeName: 'dark',
   userType: '',
   user: {},
   isSignedIn: false,

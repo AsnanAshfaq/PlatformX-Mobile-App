@@ -14,11 +14,11 @@ import CheckBox from '../Components/CheckBox';
 import {useStateValue} from '../Store/StateProvider';
 
 const INTERNSHIP_FILTER_DATA = [
-  {
-    id: 'status',
-    tag: 'Status',
-    subtag: ['Applied', 'Open', 'Ended'],
-  },
+  // {
+  //   id: 'status',
+  //   tag: 'Status',
+  //   subtag: ['Applied', 'Open', 'Ended'],
+  // },
   {
     id: 'technologies',
     tag: 'Technologies',
